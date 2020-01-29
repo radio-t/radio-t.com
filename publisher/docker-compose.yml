@@ -1,0 +1,21 @@
+version: '2'
+services:
+
+  publisher:
+    image: publisher.radio-t
+    build: .
+    logging: &default_logging
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    volumes:
+      - ./:/publisher:ro
+      - secrets:/secrets
+
+    environment:
+      - ADD_RADIOT_TO_YOUTUBE_CLIENT_SECRET_JSON
+      - ADD_RADIOT_TO_YOUTUBE_SECRET_TOKEN_PATH=/secrets/youtube.json
+    
+volumes:
+  secrets:
